@@ -1,11 +1,8 @@
 {
-  "name": "y",
+  "name": "day01",
   "version": "1.0.0",
-  "description": "",
+  "description": "## lesson01 Node API - [x] fs - [x] buffer - [x] http - [x] stream",
   "main": "index.js",
-  "bin": {
-    "kkb": "./bin/index.js"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,6 +16,11 @@
     "figlet": "^1.5.2",
     "handlebars": "^4.7.7",
     "open": "^8.2.1",
-    "ora": "^6.0.1"
+    "ora": "^6.0.1",
+    "koa": "^2.13.1",
+    "koa-bodyparser": "^4.3.0",
+    "mongoose": "^6.0.5",
+    "mysql2": "^2.3.0",
+    "sequelize": "^6.6.5"
   }
 }
