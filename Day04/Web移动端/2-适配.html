@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- viewport 移动端特有设置，解决移动端屏幕过小，放不下正常网页的问题 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 当不设置 viewport 时，视口默认为 980px 宽 -->
+  <title>Document</title>
+  <script>
+    // 淘宝方案：还原设备像素
+    (function () {
+      var metaEl = document.createElement('meta');
+      var scale = devicePixelRatio;
+      metaEl.setAttribute('name', 'viewport');
+      metaEl.setAttribute('content', 'initial-scale=' + (1/scale) + ', maximum-scale=' + (1/scale) + ', minimum-scale=' + (1/scale) + ', user-scalable=no');
+      document.documentElement.firstElementChild.appendChild(metaEl);
+    })();
+    
+    // root em 设置
+    // (function(){
+    //   var doc = document.documentElement;
+    //   // 1em = 屏幕尺寸/15
+    //   doc.style.fontSize = window.innerWidth / 15;
+    // })();
+  </script>
+  <style>
+    body {
+      margin: 0;
+    }
+    #box {
+      display: flex;
+    }
+    /* 比例单位 */
+    /* #box {
+      width: 50%;
+      height: 50px;
+      background: pink;
+    } */
+
+    /* rem单位 */
+    /* #box div {
+      width: 6.96rem;
+      height: 3.6rem;
+      margin: 0 .2rem;
+      font-size: .64rem;
+      background: red;
+    } */
+
+    /* vw：100vw = 1屏幕宽度 */
+    #box div{
+      width: 50vw;
+      height: 36vw;
+      font-size: 5vw;
+      background: yellow;
+    }
+  </style>
+</head>
+<body>
+  <div id="box">
+    <div>尖货抽签</div>
+    <div>新品日历</div>
+  </div>
+</body>
+</html>
