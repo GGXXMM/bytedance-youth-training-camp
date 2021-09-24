@@ -10,36 +10,95 @@
     {{title}}
   </div>
   <script>
-    // 基本结构
+    // 1. 基本结构
     const Vue = {
-      createApp(option) {
+      // 扩展性
+      createRenderer({
+        querySelector,
+        insert
+      }) {
+        // 返回渲染器
         return {
-          mount(selector) {
-            console.log('mount')
-            // 1. 找到宿主元素
-            const parent = document.querySelector(selector)
-            // 2. 渲染页面
-            if(!option.render) {
-              // 2.1 处理 template
-              option.render = this.compile(parent.innerHTML)
-            }
-            // 2.2 有render函数
-            const el = option.render.call(option.data())
-            // 3. 追加到宿主
-            parent.innerHTML = ''
-            parent.appendChild(el)
-          },
-          compile(template) {
-            // 返回一个 render 函数
-            // parse -> ast
-            // generate -> ast -> render
-            return function render() { 
-              const h3 = document.createElement('h3');
-              h3.textContent = this.title
-              return h3
+          creaeApp(options) {
+            return {
+              mount(selector) {
+                // console.log('mount')
+                // 1. 找到宿主元素
+                const parent = querySelector(selector)
+
+                // 2. 渲染页面
+                if (!options.render) {
+                  //   2.1 处理tempalte：编译
+                  options.render = this.compile(parent.innerHTML)
+                }
+
+                // setip 和其他选项
+                if (options.setup) {
+                  this.setupState = options.setup()
+                }
+                if (options.data) {
+                  this.data = options.data()
+                }
+
+                const proxy = new Proxy(this, {
+                  get(target, key) {
+                    // 先从setup中取，如果取不到，再从data中取
+                    if (target.setupState && key in target.setupState) {
+                      // return target.setupState[key]
+                      return Reflect.get(target.setupState, key)
+                    } else {
+                      // return target.data[key]
+                      return Reflect.get(target.data, key)
+                    }
+                    // return target[key]
+                  },
+                  set(target, key, val) {
+                    if (target.setupState && key in target.setupState) {
+                      // target.setupState[key] = val
+                      return Reflect.set(target.setupState, key, val)
+                    } else {
+                      // target.data[key] = val
+                      return Reflect.set(target.data, key, val)
+                    }
+                  }
+                })
+
+                //   2.2 用户直接编写render（先不实现）
+                // const el = options.render.call(options.data())
+                const el = options.render.call(proxy)
+
+                // 3. 追加到宿主
+
+                // parent.appendChild(el)
+                insert(el, parent)
+              },
+
+              compile(template) {
+                // 返回一个render函数
+                // parse -> ast
+                // generate -> ast -> render
+                return function render() {
+                  const h3 = document.createElement('h3')
+                  h3.textContent = this.title
+                  return h3
+                }
+              }
             }
           }
         }
+      },
+      createApp(options) {
+        // 创建一个web平台特有渲染器
+        const renderer = Vue.createRenderer({
+          querySelector(sel) {
+            return document.querySelector(sel)
+          },
+          insert(el, parent) {
+            parent.innerHTML = ''
+            parent.appendChild(el)
+          }
+        })
+        return renderer.creaeApp(options)
       }
     }
   </script>
