@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 // esm
 import fs from "fs";
 import { createIndexTemplate } from "./indexTemplate.js";
@@ -6,15 +6,21 @@ import { createPackageJsonTemplate } from "./packageJsonTemplate.js";
 import { question } from "./question/index.js";
 import { createConfig } from "./config.js";
 import execa from "execa";
+import path from "path";
 // 1. 把功能实现
 // 2. 重构
 
 // require commonjs
 
-// input
-
-// process
-// output
+// // input
+// // process
+// // output
+// const inputConfig = {
+//   middleWare: {
+//     router: true,
+//     static: true
+//   }
+// }
 
 // 程序的input
 // input
@@ -46,5 +52,5 @@ execa("yarn", {
 });
 
 function getRootPath() {
-  return "./haha";
+  return path.resolve(process.cwd(), config.packageName);
 }
