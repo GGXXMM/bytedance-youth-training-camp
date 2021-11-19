@@ -1,5 +1,5 @@
 <template>
-  <div>Hello</div>
+  <div>Hello，小铭子</div>
 </template>
 
 <script>
