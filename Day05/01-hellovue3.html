@@ -20,12 +20,20 @@
     //   }
     // })
 
-    // 类似 hook
+    // 类似 hook，增强复用性
+    function useTitle() {
+      const state = Vue.reactive({
+        title: 'hello, setup'
+      })
+      setTimeout(()=> {
+        state.title = 'hello, useTile'
+      }, 2000)
+      return state;
+    }
+
     const app = Vue.createApp({
       setup() {
-        const state = Vue.reactive({
-          title: 'vue3, setup'
-        })
+        const state = useTitle()
         return state
       }
     })
