@@ -19,6 +19,15 @@
     //     }
     //   }
     // })
+    
+    // 扩展性：自定义渲染器（用来兼容不同平台渲染）
+    // const renderer = Vue.createRenderer({
+    //   // 如何获取节点
+    //   querySelector(){},
+    //   // 如何创建元素
+    //   createElement(){}
+    // })
+    // renderer.createApp()
 
     // 类似 hook，增强复用性
     function useTitle() {
@@ -38,6 +47,10 @@
       }
     })
     app.mount('#app')
+
+
+
+
   </script>
 </body>
 </html>
